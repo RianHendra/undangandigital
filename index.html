@@ -536,7 +536,7 @@ section#beranda {
       </p>
 
       <p class="text-xs text-gray-500 leading-relaxed">
-        Jl. Antasan Kecil Barat Gg. Ibu RT.13 No.59, Kel. Pasar Lama, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70111
+        Jl. Antasan Kecil Barat Gg. Ibu RT.13 No.59 (Kampung Arab, Samping SDN Pasar Lama 6)
         
       </p>
     </div>
@@ -545,16 +545,21 @@ section#beranda {
 </div>
 
         <!-- Google Maps Button -->
-        <div class="text-center mt-10" data-aos="fade-up">
-          <a
-            href="https://maps.app.goo.gl/bruwxZkcdTJcKraS6?g_st=aw"
-            target="_blank"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-brown-deep text-white rounded-full text-xs font-medium hover:bg-brown-accent transition"
-          >
-            <i class="fa-solid fa-location-dot"></i> Petunjuk Lokasi (Google
-            Maps)
-          </a>
-        </div>
+<div class="text-center mt-10" data-aos="fade-up">
+  <a
+    :href="
+      mode === 'resepsi'
+        ? 'https://maps.app.goo.gl/iXcHHp6g1i72xzJB6'
+        : 'https://maps.app.goo.gl/bruwxZkcdTJcKraS6?g_st=aw'
+    "
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-2 px-6 py-3 bg-brown-deep text-white rounded-full text-xs font-medium hover:bg-brown-accent transition"
+  >
+    <i class="fa-solid fa-location-dot"></i>
+    Petunjuk Lokasi (Google Maps)
+  </a>
+</div>
       </div>
     </section>
 
