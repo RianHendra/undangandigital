@@ -215,10 +215,11 @@ section#beranda {
 
         <!-- Tanggal -->
         <p
-          class="text-brown-accent font-medium tracking-wide mb-8 text-xs sm:text-sm md:text-base"
-        >
-          Sabtu, 05 September 2026
-        </p>
+  class="text-brown-accent font-medium tracking-wide mb-8 text-xs sm:text-sm md:text-base"
+  x-text="mode === 'resepsi' ? 'Minggu, 06 September 2026' : 'Sabtu, 05 September 2026'"
+>
+  Sabtu, 05 September 2026
+</p>
 
         <!-- Live Countdown -->
         <div
@@ -279,10 +280,15 @@ section#beranda {
         </div>
 
         <p
-          class="text-brown-deep/80 text-xs sm:text-sm tracking-widest uppercase font-medium"
-        >
-          Menuju Akad & Resepsi
-        </p>
+  class="text-brown-deep/80 text-xs sm:text-sm tracking-widest uppercase font-medium"
+  x-text="
+    mode === 'resepsi'
+      ? 'Menuju Pernikahan'
+      : 'Menuju Akad'
+  "
+>
+  Menuju Akad
+</p>
       </div>
     </section>
 
@@ -466,39 +472,78 @@ section#beranda {
         </div>
 
         <div class="grid md:grid-cols-1 gap-8">
-          <!-- Akad & Resepsi -->
-          <div
-            class="bg-white p-8 rounded-2xl shadow-sm border border-cream-200 text-center transition-all duration-300 hover:shadow-md"
-            data-aos="zoom-in"
-            data-aos-delay="100"
-          >
-            <div
-              class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-cream-50 mb-4"
-            >
-              <i class="fa-solid fa-ring text-2xl text-brown-warm"></i>
-            </div>
 
-            <h3 class="font-serif text-2xl font-bold text-brown-deep mb-2">
-              Akad & Resepsi
-            </h3>
+  <!-- AKAD -->
+  <div
+    x-show="mode === 'akad' || mode === 'full'"
+    class="bg-white p-8 rounded-2xl shadow-sm border border-cream-200 text-center transition-all duration-300 hover:shadow-md"
+    data-aos="zoom-in"
+  >
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-cream-50 mb-4">
+      <i class="fa-solid fa-ring text-2xl text-brown-warm"></i>
+    </div>
 
-            <p class="text-sm font-medium text-brown-accent mb-1">
-              Sabtu, 05 September 2026
-            </p>
-            <p class="text-xs text-gray-500 mb-6">Pukul 09.00 WITA - Selesai</p>
+    <h3 class="font-serif text-2xl font-bold text-brown-deep mb-2">
+      Akad Nikah
+    </h3>
 
-            <div class="space-y-1 pt-4 border-t border-cream-100">
-              <p
-                class="text-xs text-brown-deep font-semibold uppercase tracking-wider"
-              >
-                Rumah Mempelai Wanita
-              </p>
-              <p class="text-xs text-gray-500 leading-relaxed">
-                Jl. Sungai Andai Komplek PWI Blok E No. 121
-              </p>
-            </div>
-          </div>
-        </div>
+    <p class="text-sm font-medium text-brown-accent mb-1">
+      Sabtu, 05 September 2026
+    </p>
+
+    <p class="text-xs text-gray-500 mb-6">
+      Pukul 09.00 WITA - Selesai
+    </p>
+
+    <div class="space-y-1 pt-4 border-t border-cream-100">
+      <p class="text-xs text-brown-deep font-semibold uppercase tracking-wider">
+        Rumah Mempelai Wanita
+      </p>
+
+      <p class="text-xs text-gray-500 leading-relaxed">
+        Jl. Sungai Andai Komplek PWI Blok E No. 121
+      </p>
+    </div>
+  </div>
+
+
+  <!-- RESEPSI -->
+  <div
+    x-show="mode === 'resepsi' || mode === 'full'"
+    class="bg-white p-8 rounded-2xl shadow-sm border border-cream-200 text-center transition-all duration-300 hover:shadow-md"
+    data-aos="zoom-in"
+  >
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-cream-50 mb-4">
+      <i class="fa-solid fa-champagne-glasses text-2xl text-brown-warm"></i>
+    </div>
+
+    <h3 class="font-serif text-2xl font-bold text-brown-deep mb-2">
+      Resepsi Pernikahan
+    </h3>
+
+    <p class="text-sm font-medium text-brown-accent mb-1">
+      Minggu, 06 September 2026
+    </p>
+
+    <p class="text-xs text-gray-500 mb-6">
+      Pukul 09.00 WITA - Selesai
+    </p>
+
+    <div class="space-y-1 pt-4 border-t border-cream-100">
+      <p class="text-xs text-brown-deep font-semibold uppercase tracking-wider">
+        Lokasi Resepsi
+      </p>
+
+      <p class="text-xs text-gray-500 leading-relaxed">
+        Jl. Sungai Andai Komplek PWI Blok E No. 121
+        <a href="http://maps.google.com/?q=Jl.+Sungai+Andai+Komplek+PWI+Blok+E+No.+121" target="_blank" class="text-brown-warm hover:underline">
+          Lihat di Google Maps
+        </a>
+      </p>
+    </div>
+  </div>
+
+</div>
 
         <!-- Google Maps Button -->
         <div class="text-center mt-10" data-aos="fade-up">
@@ -855,6 +900,19 @@ function openInvitation() {
 
       function weddingApp() {
        return {
+       mode: (() => {
+            const path = window.location.pathname.toLowerCase();
+
+            if (path.includes('/resepsi')) {
+                return 'resepsi';
+            }
+
+            if (path.includes('/full')) {
+                return 'full';
+            }
+
+            return 'akad';
+        })(),
         scriptUrl: "https://script.google.com/macros/s/AKfycbw79k158qMN7B33Uw3dJuic654ArSVsG___TJt2004PRX-jLA7HvALkpp4NTm4svCs/exec",
 
         loading: false,
@@ -901,26 +959,43 @@ function openInvitation() {
         countdown: { days: "00", hours: "00", minutes: "00", seconds: "00" },
 
         startCountdown() {
-            const target = new Date("2026-09-05T08:00:00").getTime();
-            setInterval(() => {
-                const now = new Date().getTime();
-                const diff = target - now;
-                if (diff > 0) {
-                    this.countdown.days = String(
-                        Math.floor(diff / (1000 * 60 * 60 * 24)),
-                    ).padStart(2, "0");
-                    this.countdown.hours = String(
-                        Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-                    ).padStart(2, "0");
-                    this.countdown.minutes = String(
-                        Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-                    ).padStart(2, "0");
-                    this.countdown.seconds = String(
-                        Math.floor((diff % (1000 * 60)) / 1000),
-                    ).padStart(2, "0");
-                }
-            }, 1000);
-        },
+    const targets = {
+        akad: new Date("2026-09-05T09:00:00+08:00").getTime(),
+        resepsi: new Date("2026-09-06T09:00:00+08:00").getTime(),
+        full: new Date("2026-09-05T09:00:00+08:00").getTime()
+    };
+
+    const target = targets[this.mode] || targets.akad;
+
+    setInterval(() => {
+        const now = new Date().getTime();
+        const diff = target - now;
+
+        if (diff > 0) {
+            this.countdown.days = String(
+                Math.floor(diff / (1000 * 60 * 60 * 24))
+            ).padStart(2, "0");
+
+            this.countdown.hours = String(
+                Math.floor(
+                    (diff % (1000 * 60 * 60 * 24)) /
+                    (1000 * 60 * 60)
+                )
+            ).padStart(2, "0");
+
+            this.countdown.minutes = String(
+                Math.floor(
+                    (diff % (1000 * 60 * 60)) /
+                    (1000 * 60)
+                )
+            ).padStart(2, "0");
+
+            this.countdown.seconds = String(
+                Math.floor((diff % (1000 * 60)) / 1000)
+            ).padStart(2, "0");
+        }
+    }, 1000);
+},
 
         openModal(img) {
             this.activeImg = img;
