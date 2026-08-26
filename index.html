@@ -20,6 +20,7 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="gambar/gambar.png" type="image/x-icon" />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
       rel="stylesheet"
@@ -67,60 +68,85 @@
     ></script>
 
     <style>
-      * {
-        box-sizing: border-box;
-        outline: 1px solid red;
-      }
-      body {
-        background-color: #faf8f5;
-        color: #4a3b32;
-        overflow-x: hidden;
-        width: 100%;
-      }
-      /* Hide Scrollbar for clean UI */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      section#beranda {
-        min-height: 100vh;
-        background-size: cover;
-        background-position: center;
-      }
-      /* Transisi halus saat welcome screen ditutup */
-      #welcome-screen {
-        transition:
-          opacity 0.6s ease,
-          transform 0.6s ease;
-      }
-      /* Animasi Tirai & Kartu */
+      html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  background-color: #faf8f5;
+  color: #4a3b32;
+  overflow-x: hidden;
+}
+body.lock-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Hide Scrollbar for clean UI */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+section#beranda {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Welcome Screen */
 #welcome-screen {
-    transition: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  transition: none;
 }
-.curtain-left, .curtain-right {
-    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+
+.curtain-left,
+.curtain-right {
+  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
 }
+
 .open-curtain .curtain-left {
-    transform: translateX(-100%);
+  transform: translateX(-100%);
 }
+
 .open-curtain .curtain-right {
-    transform: translateX(100%);
+  transform: translateX(100%);
 }
-/* Kartu putih langsung hilang instan saat kelas open-curtain aktif */
+
+/* Welcome Content */
 .welcome-content {
-    transition: opacity 0.1s ease;
+  transition: opacity 0.1s ease;
 }
+
 .open-curtain .welcome-content {
-    opacity: 0;
-    visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
 }
     </style>
   </head>
   <body
-    class="font-sans antialiased overflow-x-hidden pb-20 md:pb-0 w-full"
+    class="font-sans antialiased overflow-x-hidden pb-20 md:pb-0 w-full lock-scroll"
     x-data="weddingApp()"
   >
    <!-- ================= LAYAR PEMBUKA (WELCOME SCREEN) ================= -->
@@ -143,7 +169,7 @@
             
             <p class="text-xs text-brown-accent mb-6 leading-relaxed">Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di acara akad & resepsi kami.</p>
             
-            <button onclick="openInvitation()" class="w-full py-3 px-6 bg-brown-warm hover:bg-brown-accent text-white font-medium text-xs tracking-wider uppercase rounded-xl shadow-md transition-all duration-300 transform active:scale-95 cursor-pointer flex items-center justify-center gap-2">
+            <button onclick="openInvitation(); toggleAudio();" class="w-full py-3 px-6 bg-brown-warm hover:bg-brown-accent text-white font-medium text-xs tracking-wider uppercase rounded-xl shadow-md transition-all duration-300 transform active:scale-95 cursor-pointer flex items-center justify-center gap-2">
                 <i class="fa-solid fa-envelope-open"></i>
                 <span>Buka Undangan</span>
             </button>
@@ -489,8 +515,8 @@
       </div>
     </section>
 
-    <!-- 6. RSVP & Buku Tamu Section -->
-    <section id="rsvp" class="py-20 px-6 bg-cream-100 w-full">
+  <!-- 6. RSVP Section -->
+    <section id="rsvp" class="py-20 px-6 bg-cream-100 w-full mb-10">
       <div
         class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-cream-200"
         data-aos="fade-up"
@@ -507,9 +533,9 @@
         <!-- Form RSVP -->
         <form @submit.prevent="submitForm()" class="space-y-4">
           <div>
-            <label class="block text-xs font-semibold text-brown-deep mb-1"
-              >Nama Lengkap</label
-            >
+            <label class="block text-xs font-semibold text-brown-deep mb-1">
+              Nama Lengkap
+            </label>
             <input
               type="text"
               x-model="form.nama"
@@ -519,9 +545,9 @@
             />
           </div>
           <div>
-            <label class="block text-xs font-semibold text-brown-deep mb-1"
-              >Konfirmasi Kehadiran</label
-            >
+            <label class="block text-xs font-semibold text-brown-deep mb-1">
+              Konfirmasi Kehadiran
+            </label>
             <select
               x-model="form.status"
               required
@@ -533,9 +559,9 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-semibold text-brown-deep mb-1"
-              >Jumlah Tamu</label
-            >
+            <label class="block text-xs font-semibold text-brown-deep mb-1">
+              Jumlah Tamu
+            </label>
             <input
               type="number"
               x-model="form.jumlah"
@@ -546,9 +572,9 @@
             />
           </div>
           <div>
-            <label class="block text-xs font-semibold text-brown-deep mb-1"
-              >Ucapan & Doa</label
-            >
+            <label class="block text-xs font-semibold text-brown-deep mb-1">
+              Ucapan & Doa
+            </label>
             <textarea
               x-model="form.ucapan"
               rows="3"
@@ -561,13 +587,12 @@
           <button
             type="submit"
             :disabled="loading"
-            class="w-full py-3 bg-brown-warm text-white rounded-lg text-xs font-medium hover:bg-brown-accent transition flex items-center justify-center gap-2"
+            class="w-full py-3 bg-brown-warm text-white rounded-lg text-xs font-medium hover:bg-brown-accent transition flex items-center justify-center gap-2 cursor-pointer"
           >
             <span x-show="!loading">Kirim Konfirmasi</span>
-            <span x-show="loading"
-              ><i class="fa-solid fa-spinner animate-spin"></i>
-              Mengirim...</span
-            >
+            <span x-show="loading" style="display: none;">
+              <i class="fa-solid fa-spinner animate-spin"></i> Mengirim...
+            </span>
           </button>
         </form>
 
@@ -575,57 +600,87 @@
         <div
           x-show="submitted"
           class="mt-4 p-3 bg-green-50 text-green-700 text-xs rounded-lg text-center font-medium"
-          style="display: none"
+          style="display: none;"
         >
           Terima kasih! Konfirmasi dan ucapan Anda berhasil terkirim.
         </div>
       </div>
     </section>
 
-    <!-- 8. Floating Navigation Bar -->
-    <nav
-      class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full border border-cream-200 shadow-lg z-40 flex items-center gap-6 text-brown-deep"
-    >
-      <a
-        href="#beranda"
-        class="flex flex-col items-center text-[10px] hover:text-brown-warm transition"
+   <!-- 7. Section Daftar Tamu & Ucapan (Terpisah) -->
+    <section class="py-10 px-6 bg-cream-100 w-full mb-10">
+      <div
+        class="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-cream-200"
+        data-aos="fade-up"
       >
+        <!-- Judul Section -->
+        <div class="mb-6 text-center">
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brown-deep">
+            Buku Tamu & Ucapan
+          </h2>
+          <p class="text-xs text-brown-accent mt-1">
+            Daftar doa dan konfirmasi kehadiran dari para tamu undangan.
+          </p>
+        </div>
+        
+        <!-- Kotak List Ber-scroll -->
+        <div class="space-y-3 max-h-72 overflow-y-auto pr-1 no-scrollbar text-left">
+          <!-- Jika belum ada data -->
+          <template x-if="guestMessages.length === 0">
+            <div class="text-center py-8">
+              <i class="fa-regular fa-comment-dots text-2xl text-gray-300 mb-2"></i>
+              <p class="text-xs text-gray-400 italic">
+                Belum ada ucapan. Jadilah yang pertama memberikan doa!
+              </p>
+            </div>
+          </template>
+
+          <!-- Looping data ucapan yang masuk -->
+          <template x-for="(item, index) in guestMessages" :key="index">
+            <div class="bg-cream-50 p-4 rounded-xl border border-cream-200">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-semibold text-xs text-brown-deep" x-text="item.nama"></span>
+                <span
+                  class="text-[10px] px-2.5 py-0.5 rounded-full font-medium"
+                  :class="item.status === 'Hadir' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+                  x-text="item.status"
+                ></span>
+              </div>
+              <p class="text-xs text-brown-accent leading-relaxed" x-text="item.ucapan"></p>
+              <span class="block text-[9px] text-gray-400 mt-2 text-right" x-text="item.waktu"></span>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+
+   <!-- 8. Floating Navigation Bar -->
+<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full border border-cream-200 shadow-lg z-40 flex items-center gap-6 text-brown-deep">
+    <a href="#beranda" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-house text-base"></i>
         <span>Beranda</span>
-      </a>
-      <a
-        href="#mempelai"
-        class="flex flex-col items-center text-[10px] hover:text-brown-warm transition"
-      >
+    </a>
+    <a href="#mempelai" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-heart text-base"></i>
         <span>Mempelai</span>
-      </a>
-      <a
-        href="#acara"
-        class="flex flex-col items-center text-[10px] hover:text-brown-warm transition"
-      >
+    </a>
+    <a href="#acara" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-calendar-days text-base"></i>
         <span>Acara</span>
-      </a>
-      <a
-        href="#galeri"
-        class="flex flex-col items-center text-[10px] hover:text-brown-warm transition"
-      >
+    </a>
+    <a href="#galeri" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-images text-base"></i>
         <span>Galeri</span>
-      </a>
-      <a
-        href="#rsvp"
-        class="flex flex-col items-center text-[10px] hover:text-brown-warm transition"
-      >
+    </a>
+    <a href="#rsvp" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-envelope text-base"></i>
         <span>RSVP</span>
-      </a>
-    </nav>
+    </a>
+</nav>
 
     <!-- 9. Floating Audio Player -->
     <button
-      @click="toggleAudio()"
+      @click="toggleAudio();"
       class="fixed bottom-4 right-4 w-10 h-10 bg-brown-warm text-white rounded-full flex items-center justify-center shadow-lg z-40 text-sm hover:bg-brown-accent transition"
     >
       <i
@@ -633,7 +688,7 @@
         :class="isPlaying ? 'fa-music animate-spin' : 'fa-volume-xmark'"
       ></i>
     </button>
-    <audio x-ref="bgAudio" loop src="Song.mp3"></audio>
+    <audio x-ref="bgAudio" loop src="song_new.mp3" preload="auto"></audio>
 
     <!-- AOS Script Initialization -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -652,35 +707,55 @@
       });
 
      
-     // Fungsi saat tombol "Buka Undangan" diklik
-        function openInvitation() {
-            const welcomeScreen = document.getElementById('welcome-screen');
-            const welcomeCard = welcomeScreen.querySelector('.welcome-content');
-            
-            // 1. Langsung sembunyikan card putih seketika tanpa jeda
-            if (welcomeCard) {
-                welcomeCard.style.opacity = '0';
-                welcomeCard.style.visibility = 'hidden';
-            }
-            
-            // 2. Jalankan animasi tirai terbuka
-            welcomeScreen.classList.add('open-curtain');
-            
-            // 3. Hapus seluruh welcome screen setelah tirai selesai bergeser (1.2 detik)
-            setTimeout(() => {
-                welcomeScreen.style.display = 'none';
-            }, 1200);
+    // Fungsi saat tombol "Buka Undangan" diklik
+// Fungsi saat tombol "Buka Undangan" diklik
+// Fungsi saat tombol "Buka Undangan" diklik
+function openInvitation() {
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const welcomeCard = welcomeScreen.querySelector('.welcome-content');
+    
+    // 1. Langsung sembunyikan card putih seketika tanpa jeda
+    if (welcomeCard) {
+        welcomeCard.style.opacity = '0';
+        welcomeCard.style.visibility = 'hidden';
+    }
+    
+    // 2. Jalankan animasi tirai terbuka
+    welcomeScreen.classList.add('open-curtain');
+    
+    // 3. Buka kunci scroll pada body agar halaman bisa digulir
+    document.body.classList.remove('lock-scroll');
+    
+    // 4. Hapus seluruh welcome screen setelah tirai selesai bergeser (1.2 detik)
+    setTimeout(() => {
+        welcomeScreen.style.display = 'none';
+    }, 1200);
 
-            // Otomatis putar musik latar belakang saat undangan dibuka
-            const alpineComponent = document.querySelector('[x-data]').__x.$data;
-            if (alpineComponent && !alpineComponent.isPlaying) {
-                alpineComponent.toggleAudio();
+    // 5. CARA LANGSUNG: Putar audio dan ubah state isPlaying Alpine.js
+    const audio = document.querySelector('audio');
+    const alpineDiv = document.querySelector('[x-data]');
+    
+    if (audio) {
+        audio.play().then(() => {
+            // Cari data Alpine component lalu ubah isPlaying menjadi true agar ikon berputar
+            if (alpineDiv && alpineDiv.__x) {
+                alpineDiv.__x.$data.isPlaying = true;
+            } else {
+                // Fallback jika struktur __x berbeda, kita cari event/alpine instance
+                const alpineData = Alpine.$data(alpineDiv);
+                if (alpineData) {
+                    alpineData.isPlaying = true;
+                }
             }
-        }
+        }).catch(error => {
+            console.warn("Autoplay dicegah oleh browser:", error);
+        });
+    }
+}
 
       function weddingApp() {
         return {
-          scriptUrl: "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
+          scriptUrl: "https://script.google.com/macros/s/AKfycbw79k158qMN7B33Uw3dJuic654ArSVsG___TJt2004PRX-jLA7HvALkpp4NTm4svCs/exec",
 
           loading: false,
           submitted: false,
@@ -690,6 +765,34 @@
           isPlaying: false,
 
           form: { nama: "", status: "", jumlah: 1, ucapan: "" },
+// Array untuk menampung daftar ucapan yang tampil di bawah form
+        guestMessages: [],
+
+            // Dijalankan otomatis saat halaman pertama kali dimuat
+        init() {
+            this.startCountdown();
+            this.fetchGuestMessages(); // <--- Ini yang menarik data dari Spreadsheet
+        },
+
+        // Fungsi untuk mengambil data dari Google Spreadsheet
+       async fetchGuestMessages() {
+    try {
+        console.log("Mencoba mengambil data dari:", this.scriptUrl);
+        
+        const response = await fetch(this.scriptUrl);
+        const textData = await response.text(); // Ambil sebagai teks dulu untuk mencegah crash JSON
+        
+        console.log("Respon mentah dari server:", textData);
+        
+        // Ubah kembali ke JSON
+        const data = JSON.parse(textData);
+        this.guestMessages = data.reverse();
+        
+        console.log("Data tamu berhasil diproses:", this.guestMessages);
+    } catch (e) {
+        console.error("Terjadi error saat fetch data tamu:", e);
+    }
+},
 
           gallery: [
             "gambar/new/DED6162.JPEG",
@@ -732,14 +835,23 @@
           },
 
           toggleAudio() {
-            const audio = this.$refs.bgAudio;
-            if (this.isPlaying) {
-              audio.pause();
-            } else {
-              audio.play();
-            }
-            this.isPlaying = !this.isPlaying;
-          },
+    const audio = this.$refs.bgAudio;
+    
+    if (!audio) return;
+
+    if (this.isPlaying) {
+        audio.pause();
+        this.isPlaying = false;
+    } else {
+        audio.play().then(() => {
+            this.isPlaying = true;
+        }).catch(error => {
+            // Handles browser autoplay restriction policies gracefully
+            console.warn("Playback prevented by browser policy:", error);
+            this.isPlaying = false;
+        });
+    }
+},
 
          copyRekening(no) {
     navigator.clipboard.writeText(no);
@@ -750,22 +862,43 @@
 },
 
           async submitForm() {
+            if (!this.form.nama || !this.form.status) {
+                alert('Mohon isi nama dan status kehadiran terlebih dahulu.');
+                return;
+            }
+
             this.loading = true;
             try {
-              await fetch(this.scriptUrl, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(this.form),
-              });
-              this.submitted = true;
-              this.form = { nama: "", status: "", jumlah: 1, ucapan: "" };
+                const formData = new URLSearchParams();
+                formData.append('nama', this.form.nama);
+                formData.append('status', this.form.status);
+                formData.append('jumlah', this.form.jumlah);
+                formData.append('ucapan', this.form.ucapan);
+
+                // Kirim ke Spreadsheet
+                await fetch(this.scriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+
+                this.submitted = true;
+                this.form = { nama: '', status: '', jumlah: 1, ucapan: '' };
+                
+                // Beri jeda sebentar lalu tarik data terbaru dari Spreadsheet agar langsung tampil di list
+                setTimeout(() => {
+                    this.fetchGuestMessages();
+                    this.submitted = false;
+                }, 2000);
+
             } catch (e) {
-              alert("Gagal mengirim data. Coba lagi nanti.");
+                console.error("Error:", e);
+                alert('Gagal mengirim data. Coba lagi nanti.');
             } finally {
-              this.loading = false;
+                this.loading = false;
             }
-          },
+        }
+    
         };
       }
     </script>
