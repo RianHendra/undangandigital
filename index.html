@@ -757,42 +757,33 @@ function openInvitation() {
         return {
           scriptUrl: "https://script.google.com/macros/s/AKfycbw79k158qMN7B33Uw3dJuic654ArSVsG___TJt2004PRX-jLA7HvALkpp4NTm4svCs/exec",
 
-          loading: false,
-          submitted: false,
-          copiedAccount: '', // Menyimpan nomor rekening yang sedang disalin
-          modalOpen: false,
-          activeImg: "",
-          isPlaying: false,
+        loading: false,
+        submitted: false,
+        copiedAccount: '',
+        modalOpen: false,
+        activeImg: "",
+        isPlaying: false,
 
-          form: { nama: "", status: "", jumlah: 1, ucapan: "" },
-// Array untuk menampung daftar ucapan yang tampil di bawah form
-        guestMessages: [],
+        form: { nama: "", status: "", jumlah: 1, ucapan: "" },
+        guestMessages: [], // Array penampung data
 
-            // Dijalankan otomatis saat halaman pertama kali dimuat
+        // Wajib ada init() agar otomatis dijalankan saat halaman dibuka
         init() {
             this.startCountdown();
-            this.fetchGuestMessages(); // <--- Ini yang menarik data dari Spreadsheet
+            this.fetchGuestMessages(); // Panggil fungsi ini saat halaman dimuat
         },
 
-        // Fungsi untuk mengambil data dari Google Spreadsheet
-       async fetchGuestMessages() {
-    try {
-        console.log("Mencoba mengambil data dari:", this.scriptUrl);
-        
-        const response = await fetch(this.scriptUrl);
-        const textData = await response.text(); // Ambil sebagai teks dulu untuk mencegah crash JSON
-        
-        console.log("Respon mentah dari server:", textData);
-        
-        // Ubah kembali ke JSON
-        const data = JSON.parse(textData);
-        this.guestMessages = data.reverse();
-        
-        console.log("Data tamu berhasil diproses:", this.guestMessages);
-    } catch (e) {
-        console.error("Terjadi error saat fetch data tamu:", e);
-    }
-},
+        // Fungsi fetch data tamu
+        async fetchGuestMessages() {
+            try {
+                const response = await fetch(this.scriptUrl);
+                const data = await response.json();
+                // Masukkan data ke array guestMessages dan balik urutannya (terbaru di atas)
+                this.guestMessages = data.reverse();
+            } catch (e) {
+                console.error("Gagal memuat data tamu:", e);
+            }
+        },
 
           gallery: [
             "gambar/new/DED6162.JPEG",
