@@ -32,7 +32,8 @@
 
     <!-- AOS Animation CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -607,13 +608,9 @@ section#beranda {
       </div>
     </section>
 
-   <!-- 7. Section Daftar Tamu & Ucapan (Terpisah) -->
+<!-- 7. Section Daftar Tamu & Ucapan -->
     <section class="py-10 px-6 bg-cream-100 w-full mb-10">
-      <div
-        class="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-cream-200"
-        data-aos="fade-up"
-      >
-        <!-- Judul Section -->
+      <div class="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-cream-200" data-aos="fade-up">
         <div class="mb-6 text-center">
           <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brown-deep">
             Buku Tamu & Ucapan
@@ -623,9 +620,9 @@ section#beranda {
           </p>
         </div>
         
-        <!-- Kotak List Ber-scroll -->
-        <div class="space-y-3 max-h-72 overflow-y-auto pr-1 no-scrollbar text-left">
-          <!-- Jika belum ada data -->
+        <!-- Kotak List Ber-scroll (Aktif otomatis jika data melebihi 5 kartu) -->
+        <div class="space-y-3 max-h-[380px] overflow-y-auto pr-2 no-scrollbar text-left">
+          <!-- Jika data kosong -->
           <template x-if="guestMessages.length === 0">
             <div class="text-center py-8">
               <i class="fa-regular fa-comment-dots text-2xl text-gray-300 mb-2"></i>
@@ -635,7 +632,7 @@ section#beranda {
             </div>
           </template>
 
-          <!-- Looping data ucapan yang masuk -->
+          <!-- Looping data ucapan dari Google Spreadsheet -->
           <template x-for="(item, index) in guestMessages" :key="index">
             <div class="bg-cream-50 p-4 rounded-xl border border-cream-200">
               <div class="flex items-center justify-between mb-1">
@@ -678,17 +675,17 @@ section#beranda {
     </a>
 </nav>
 
-    <!-- 9. Floating Audio Player -->
-    <button
-      @click="toggleAudio();"
-      class="fixed bottom-4 right-4 w-10 h-10 bg-brown-warm text-white rounded-full flex items-center justify-center shadow-lg z-40 text-sm hover:bg-brown-accent transition"
-    >
-      <i
-        class="fa-solid"
-        :class="isPlaying ? 'fa-music animate-spin' : 'fa-volume-xmark'"
-      ></i>
-    </button>
-    <audio x-ref="bgAudio" loop src="song_new.mp3" preload="auto"></audio>
+<!-- 9. Floating Audio Player -->
+<button
+  @click="toggleAudio()"
+  class="fixed bottom-4 right-4 w-10 h-10 bg-brown-warm text-white rounded-full flex items-center justify-center shadow-lg z-40 text-sm hover:bg-brown-accent transition cursor-pointer"
+>
+  <i
+    class="fa-solid"
+    :class="isPlaying ? 'fa-music animate-spin' : 'fa-volume-xmark'"
+  ></i>
+</button>
+<audio x-ref="bgAudio" loop src="song_new.mp3" preload="auto"></audio>
 
     <!-- AOS Script Initialization -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -754,8 +751,8 @@ function openInvitation() {
 }
 
       function weddingApp() {
-        return {
-          scriptUrl: "https://script.google.com/macros/s/AKfycbw79k158qMN7B33Uw3dJuic654ArSVsG___TJt2004PRX-jLA7HvALkpp4NTm4svCs/exec",
+       return {
+        scriptUrl: "https://script.google.com/macros/s/AKfycbw79k158qMN7B33Uw3dJuic654ArSVsG___TJt2004PRX-jLA7HvALkpp4NTm4svCs/exec",
 
         loading: false,
         submitted: false,
@@ -767,82 +764,78 @@ function openInvitation() {
         form: { nama: "", status: "", jumlah: 1, ucapan: "" },
         guestMessages: [], // Array penampung data
 
-        // Wajib ada init() agar otomatis dijalankan saat halaman dibuka
+        // SATU FUNGSI INIT GABUNGAN YANG BENAR
         init() {
             this.startCountdown();
-            this.fetchGuestMessages(); // Panggil fungsi ini saat halaman dimuat
+            this.fetchGuestMessages();
         },
 
-        // Fungsi fetch data tamu
         async fetchGuestMessages() {
             try {
                 const response = await fetch(this.scriptUrl);
                 const data = await response.json();
-                // Masukkan data ke array guestMessages dan balik urutannya (terbaru di atas)
+                
+                
+                // Masukkan ke array dan balik urutannya
                 this.guestMessages = data.reverse();
+                
             } catch (e) {
-                console.error("Gagal memuat data tamu:", e);
+                console.error("Gagal memuat data tamu di init:", e);
             }
         },
 
-          gallery: [
+        gallery: [
             "gambar/new/DED6162.JPEG",
             "gambar/new/DED6266.JPEG",
             "gambar/new/DED6304.JPEG",
             "gambar/new/DED6851.JPEG",
-          ],
+        ],
 
-          countdown: { days: "00", hours: "00", minutes: "00", seconds: "00" },
+        countdown: { days: "00", hours: "00", minutes: "00", seconds: "00" },
 
-          init() {
-            this.startCountdown();
-          },
-
-          startCountdown() {
+        startCountdown() {
             const target = new Date("2026-09-05T08:00:00").getTime();
             setInterval(() => {
-              const now = new Date().getTime();
-              const diff = target - now;
-              if (diff > 0) {
-                this.countdown.days = String(
-                  Math.floor(diff / (1000 * 60 * 60 * 24)),
-                ).padStart(2, "0");
-                this.countdown.hours = String(
-                  Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-                ).padStart(2, "0");
-                this.countdown.minutes = String(
-                  Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-                ).padStart(2, "0");
-                this.countdown.seconds = String(
-                  Math.floor((diff % (1000 * 60)) / 1000),
-                ).padStart(2, "0");
-              }
+                const now = new Date().getTime();
+                const diff = target - now;
+                if (diff > 0) {
+                    this.countdown.days = String(
+                        Math.floor(diff / (1000 * 60 * 60 * 24)),
+                    ).padStart(2, "0");
+                    this.countdown.hours = String(
+                        Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                    ).padStart(2, "0");
+                    this.countdown.minutes = String(
+                        Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+                    ).padStart(2, "0");
+                    this.countdown.seconds = String(
+                        Math.floor((diff % (1000 * 60)) / 1000),
+                    ).padStart(2, "0");
+                }
             }, 1000);
-          },
+        },
 
-          openModal(img) {
+        openModal(img) {
             this.activeImg = img;
             this.modalOpen = true;
-          },
+        },
 
-          toggleAudio() {
-    const audio = this.$refs.bgAudio;
-    
-    if (!audio) return;
+        toggleAudio() {
+            const audio = this.$refs.bgAudio;
+            if (!audio) return;
 
-    if (this.isPlaying) {
-        audio.pause();
-        this.isPlaying = false;
-    } else {
-        audio.play().then(() => {
-            this.isPlaying = true;
-        }).catch(error => {
-            // Handles browser autoplay restriction policies gracefully
-            console.warn("Playback prevented by browser policy:", error);
-            this.isPlaying = false;
-        });
-    }
-},
+            if (this.isPlaying) {
+                audio.pause();
+                this.isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    this.isPlaying = true;
+                }).catch(error => {
+                    console.warn("Playback dicegah:", error);
+                    this.isPlaying = false;
+                });
+            }
+        },
 
          copyRekening(no) {
     navigator.clipboard.writeText(no);
@@ -852,43 +845,73 @@ function openInvitation() {
     }, 2000);
 },
 
-          async submitForm() {
-            if (!this.form.nama || !this.form.status) {
-                alert('Mohon isi nama dan status kehadiran terlebih dahulu.');
-                return;
-            }
+         async submitForm() {
+    if (!this.form.nama || !this.form.status) {
+        // Menggunakan SweetAlert untuk peringatan form kosong
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Mohon isi nama dan status kehadiran terlebih dahulu ya!',
+            confirmButtonColor: '#8C6D53', // Menyesuaikan warna brown-warm tema Anda
+        });
+        return;
+    }
 
-            this.loading = true;
-            try {
-                const formData = new URLSearchParams();
-                formData.append('nama', this.form.nama);
-                formData.append('status', this.form.status);
-                formData.append('jumlah', this.form.jumlah);
-                formData.append('ucapan', this.form.ucapan);
+    this.loading = true;
+    try {
+        const formData = new URLSearchParams();
+        formData.append('nama', this.form.nama);
+        formData.append('status', this.form.status);
+        formData.append('jumlah', this.form.jumlah);
+        formData.append('ucapan', this.form.ucapan);
 
-                // Kirim ke Spreadsheet
-                await fetch(this.scriptUrl, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: formData
-                });
+        // Kirim data ke Google Spreadsheet
+        await fetch(this.scriptUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+        });
 
-                this.submitted = true;
-                this.form = { nama: '', status: '', jumlah: 1, ucapan: '' };
-                
-                // Beri jeda sebentar lalu tarik data terbaru dari Spreadsheet agar langsung tampil di list
-                setTimeout(() => {
-                    this.fetchGuestMessages();
-                    this.submitted = false;
-                }, 2000);
+        // Format waktu saat ini
+        const waktuSekarang = new Date().toLocaleDateString('id-ID', { 
+            day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' 
+        });
 
-            } catch (e) {
-                console.error("Error:", e);
-                alert('Gagal mengirim data. Coba lagi nanti.');
-            } finally {
-                this.loading = false;
-            }
-        }
+        // Masukkan data ke urutan paling atas array guestMessages
+        this.guestMessages.unshift({
+            nama: this.form.nama,
+            status: this.form.status,
+            jumlah: this.form.jumlah,
+            ucapan: this.form.ucapan,
+            waktu: waktuSekarang
+        });
+
+        // Reset form
+        this.form = { nama: '', status: '', jumlah: 1, ucapan: '' };
+
+        // Tampilkan SweetAlert Sukses yang Elegan
+        Swal.fire({
+            icon: 'success',
+            title: 'Terima Kasih!',
+            text: 'Konfirmasi kehadiran dan ucapan Anda berhasil terkirim.',
+            timer: 3000,
+            showConfirmButton: false,
+            background: '#FAF6F0', // Warna background nuansa cream
+            color: '#4A3B32'      // Warna teks nuansa brown-deep
+        });
+
+    } catch (e) {
+        console.error("Error:", e);
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal Mengirim',
+            text: 'Terjadi kesalahan, silahkan coba beberapa saat lagi.',
+            confirmButtonColor: '#8C6D53',
+        });
+    } finally {
+        this.loading = false;
+    }
+}
     
         };
       }
