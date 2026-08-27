@@ -315,7 +315,7 @@
     </section>
 
    <!-- Section: Kisah Awal Bertemu (Our Love Story - 5 Langkah dengan Titik Berdenyut) -->
-    <section class="py-16 px-6 bg-cream-50 w-full mb-10">
+    <section id="lovestory" class="py-16 px-6 bg-cream-50 w-full mb-10">
       <div class="max-w-2xl mx-auto" data-aos="fade-up">
         <!-- Judul Section -->
         <div class="text-center mb-12">
@@ -566,7 +566,7 @@
     </section>
 
     <!-- 7. Amplop Digital Section -->
-    <section
+    <section id="amplop"
       class="py-16 px-6 max-w-xl mx-auto text-center w-full"
       data-aos="fade-up"
     >
@@ -791,44 +791,57 @@
     </footer>
 
    <!-- 8. Floating Navigation Bar -->
-<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full border border-cream-200 shadow-lg z-40 flex items-center gap-6 text-brown-deep">
-
+<!-- 8. Floating Navigation Bar (Responsive Mobile) -->
+<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-md bg-white/90 backdrop-blur-md px-3 py-2.5 rounded-full border border-cream-200 shadow-lg z-40 flex items-center justify-between text-brown-deep overflow-x-auto no-scrollbar">
+    
     <a href="#beranda" data-scroll="beranda"
-       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
-        <i class="fa-solid fa-house text-base"></i>
+       class="flex flex-col items-center text-[9px] sm:text-[10px] hover:text-brown-warm transition px-1.5 shrink-0">
+        <i class="fa-solid fa-house text-sm sm:text-base"></i>
         <span>Beranda</span>
     </a>
 
     <a href="#mempelai" data-scroll="mempelai"
-       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
-        <i class="fa-solid fa-heart text-base"></i>
+       class="flex flex-col items-center text-[9px] sm:text-[10px] hover:text-brown-warm transition px-1.5 shrink-0">
+        <i class="fa-solid fa-heart text-sm sm:text-base"></i>
         <span>Mempelai</span>
     </a>
 
+    <a href="#lovestory" data-scroll="lovestory"
+       class="flex flex-col items-center text-[9px] sm:text-[10px] hover:text-brown-warm transition px-1.5 shrink-0">
+        <i class="fa-solid fa-book-open text-sm sm:text-base"></i>
+        <span>Story</span>
+    </a>
+
     <a href="#acara" data-scroll="acara"
-       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
-        <i class="fa-solid fa-calendar-days text-base"></i>
+       class="flex flex-col items-center text-[9px] sm:text-[10px] hover:text-brown-warm transition px-1.5 shrink-0">
+        <i class="fa-solid fa-calendar-days text-sm sm:text-base"></i>
         <span>Acara</span>
     </a>
 
     <a href="#galeri" data-scroll="galeri"
-       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
-        <i class="fa-solid fa-images text-base"></i>
+       class="flex flex-col items-center text-[9px] sm:text-[10px] hover:text-brown-warm transition px-1.5 shrink-0">
+        <i class="fa-solid fa-images text-sm sm:text-base"></i>
         <span>Galeri</span>
     </a>
 
+    <a href="#amplop" data-scroll="amplop"
+       class="flex flex-col items-center text-[9px] sm:text-[10px] hover:text-brown-warm transition px-1.5 shrink-0">
+        <i class="fa-solid fa-wallet text-sm sm:text-base"></i>
+        <span>Amplop</span>
+    </a>
+
     <a href="#rsvp" data-scroll="rsvp"
-       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
-        <i class="fa-solid fa-envelope text-base"></i>
+       class="flex flex-col items-center text-[9px] sm:text-[10px] hover:text-brown-warm transition px-1.5 shrink-0">
+        <i class="fa-solid fa-envelope text-sm sm:text-base"></i>
         <span>RSVP</span>
     </a>
 
 </nav>
 
-<!-- 9. Floating Audio Player -->
+<!-- 9. Floating Audio Player (Dipindah ke Kiri Bawah agar tidak menutupi Navigasi/RSVP) -->
 <button
   @click="toggleAudio()"
-  class="fixed bottom-4 right-4 w-10 h-10 bg-brown-warm text-white rounded-full flex items-center justify-center shadow-lg z-40 text-sm hover:bg-brown-accent transition cursor-pointer"
+  class="fixed md:bottom-4 bottom-20 right-4 w-10 h-10 bg-brown-warm text-white rounded-full flex items-center justify-center shadow-lg z-40 text-sm hover:bg-brown-accent transition cursor-pointer"
 >
   <i
     class="fa-solid"
