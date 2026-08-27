@@ -69,91 +69,7 @@
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
 
-    <style>
-      html {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-body {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  margin: 0;
-  background-color: #faf8f5;
-  color: #4a3b32;
-  overflow-x: hidden;
-  background-color: #faf8f5;
-    background-image: 
-        radial-gradient(#c4a484 0.75px, transparent 0.75px), 
-        radial-gradient(#c4a484 0.75px, #faf8f5 0.75px);
-    background-size: 30px 30px;
-    background-position: 0 0, 15px 15px;
-    background-opacity: 0.15;
-
-}
-body.lock-scroll {
-    overflow: hidden;
-    height: 100vh;
-}
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* Hide Scrollbar for clean UI */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-section#beranda {
-  width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-}
-
-/* Welcome Screen */
-#welcome-screen {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  transition: none;
-}
-
-.curtain-left,
-.curtain-right {
-  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-.open-curtain .curtain-left {
-  transform: translateX(-100%);
-}
-
-.open-curtain .curtain-right {
-  transform: translateX(100%);
-}
-
-/* Welcome Content */
-.welcome-content {
-  transition: opacity 0.1s ease;
-}
-
-.open-curtain .welcome-content {
-  opacity: 0;
-  visibility: hidden;
-}
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body
     class="font-sans antialiased overflow-x-hidden pb-20 md:pb-0 w-full lock-scroll"
@@ -168,7 +84,8 @@ section#beranda {
         <div class="curtain-right absolute inset-y-0 right-0 w-1/2 bg-cream-50 bg-cover bg-center border-l border-cream-200/50 shadow-2xl z-10" style="background-image: linear-gradient(rgba(250, 248, 245, 0.92), rgba(250, 248, 245, 0.96)), url('gambar/DED6906.jpg'); background-position: right center;"></div>
 
         <!-- Konten Kotak Undangan di Tengah -->
-        <div class="welcome-content relative z-20 w-full max-w-[340px] sm:max-w-md bg-white/95 backdrop-blur-md border border-cream-200 p-5 sm:p-8 rounded-2xl shadow-xl mx-4 text-center my-auto" data-aos="zoom-in">
+        <!-- Konten Kotak Undangan di Tengah -->
+        <div class="welcome-content relative z-20 w-full max-w-[340px] sm:max-w-md bg-white/95 backdrop-blur-md border border-cream-200 p-5 sm:p-8 rounded-2xl shadow-xl mx-4 text-center my-auto max-h-[90vh] overflow-y-auto no-scrollbar" data-aos="zoom-in">
             <span class="uppercase tracking-[0.2em] text-xs text-brown-accent font-semibold mb-2 block">The Wedding Of</span>
             <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-brown-deep mb-6 break-words">Ery & Amel</h2>
             
@@ -179,6 +96,36 @@ section#beranda {
             
             <p class="text-xs text-brown-accent mb-6 leading-relaxed">Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di acara akad & resepsi kami.</p>
             
+           <!-- BAGIAN TURUT MENGUNDANG -->
+<div
+    x-show="mode === 'resepsi' || mode === 'full'"
+    x-transition.opacity.duration.300ms
+    class="mb-6 bg-cream-50 p-4 rounded-xl border border-cream-200 text-left"
+>
+    <h4 class="font-serif text-sm font-bold text-brown-deep text-center mb-3 uppercase tracking-wider border-b border-cream-200 pb-2">
+        Turut Mengundang
+    </h4>
+
+    <!-- Pihak Pria -->
+    <div class="mb-3">
+        <p class="text-[11px] font-semibold text-brown-accent mb-1">
+            Dari Pihak Mempelai Pria :
+        </p>
+
+        <p class="text-[11px] text-brown-deep font-medium">
+            Keluarga besar
+        </p>
+
+        <ul class="text-[11px] text-gray-600 space-y-0.5 pl-2 mt-1">
+            <li>- (Alm) H. Maspel bin H. Mukri</li>
+            <li>&nbsp;&nbsp;(Almh) Hj. Feiziah Abay binti Abay</li>
+            <li>- (Alm) Muhammad Fadli bin Nasri</li>
+            <li>&nbsp;&nbsp;(Almh) Hj. Rohati binti H. Irman</li>
+        </ul>
+    </div>
+</div>
+<!-- AKHIR TURUT MENGUNDANG -->
+
             <button onclick="openInvitation(); toggleAudio();" class="w-full py-3 px-6 bg-brown-warm hover:bg-brown-accent text-white font-medium text-xs tracking-wider uppercase rounded-xl shadow-md transition-all duration-300 transform active:scale-95 cursor-pointer flex items-center justify-center gap-2">
                 <i class="fa-solid fa-envelope-open"></i>
                 <span>Buka Undangan</span>
@@ -803,6 +750,46 @@ section#beranda {
       </div>
     </section>
 
+    <!-- Footer & Jasa Pembuatan Undangan / Desain -->
+    <footer class="py-12 px-6 bg-cream-50 border-t border-cream-200 text-center w-full">
+      <div class="max-w-xl mx-auto" data-aos="fade-up">
+        <p class="text-xs uppercase tracking-widest text-brown-accent font-medium mb-1">
+          Dibuat dengan ❤ oleh
+        </p>
+        <h3 class="font-serif text-xl font-bold text-brown-deep mb-4">
+          Undangan Digital & Desain Profesional
+        </h3>
+        <p class="text-xs text-brown-accent mb-6 leading-relaxed">
+          Ingin membuat undangan digital interaktif seperti ini atau butuh bantuan desain banner & grafis profesional untuk acara Anda? Hubungi kami di:
+        </p>
+        
+        <!-- Badge / Tombol Media Sosial -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="https://instagram.com/undangandigital.my"
+            target="_blank"
+            class="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-cream-200 text-brown-deep rounded-full text-xs font-semibold shadow-sm hover:bg-cream-100 transition"
+          >
+            <i class="fa-brands fa-instagram text-brown-warm text-sm"></i>
+            <span>@undangandigital.my</span>
+          </a>
+
+          <a
+            href="https://instagram.com/bannerdesign_bjm"
+            target="_blank"
+            class="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-cream-200 text-brown-deep rounded-full text-xs font-semibold shadow-sm hover:bg-cream-100 transition"
+          >
+            <i class="fa-brands fa-instagram text-brown-warm text-sm"></i>
+            <span>@bannerdesign_bjm</span>
+          </a>
+        </div>
+
+        <p class="text-[10px] text-gray-400 mt-8">
+          &copy; 2026 Ery & Amel. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
    <!-- 8. Floating Navigation Bar -->
 <nav class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full border border-cream-200 shadow-lg z-40 flex items-center gap-6 text-brown-deep">
 
@@ -852,293 +839,7 @@ section#beranda {
 
     <!-- AOS Script Initialization -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-      AOS.init({ once: true, duration: 800 });
-
-      // Mengambil nama tamu dari URL menggunakan Query Parameter (?to=...)
-      document.addEventListener("DOMContentLoaded", () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const guestName = urlParams.get("to");
-        const guestNameElement = document.getElementById("guest-name");
-
-        if (guestName && guestNameElement) {
-          guestNameElement.textContent = guestName;
-        }
-      });
-
-     
-    // Fungsi saat tombol "Buka Undangan" diklik
-// Fungsi saat tombol "Buka Undangan" diklik
-// Fungsi saat tombol "Buka Undangan" diklik
-function openInvitation() {
-    const welcomeScreen = document.getElementById('welcome-screen');
-    const welcomeCard = welcomeScreen.querySelector('.welcome-content');
+    <script src="script.js"></script>
     
-    // 1. Langsung sembunyikan card putih seketika tanpa jeda
-    if (welcomeCard) {
-        welcomeCard.style.opacity = '0';
-        welcomeCard.style.visibility = 'hidden';
-    }
-    
-    // 2. Jalankan animasi tirai terbuka
-    welcomeScreen.classList.add('open-curtain');
-    
-    // 3. Buka kunci scroll pada body agar halaman bisa digulir
-    document.body.classList.remove('lock-scroll');
-    
-    // 4. Hapus seluruh welcome screen setelah tirai selesai bergeser (1.2 detik)
-    setTimeout(() => {
-        welcomeScreen.style.display = 'none';
-    }, 1200);
-
-    // 5. CARA LANGSUNG: Putar audio dan ubah state isPlaying Alpine.js
-    const audio = document.querySelector('audio');
-    const alpineDiv = document.querySelector('[x-data]');
-    
-    if (audio) {
-        audio.play().then(() => {
-            // Cari data Alpine component lalu ubah isPlaying menjadi true agar ikon berputar
-            if (alpineDiv && alpineDiv.__x) {
-                alpineDiv.__x.$data.isPlaying = true;
-            } else {
-                // Fallback jika struktur __x berbeda, kita cari event/alpine instance
-                const alpineData = Alpine.$data(alpineDiv);
-                if (alpineData) {
-                    alpineData.isPlaying = true;
-                }
-            }
-        }).catch(error => {
-            console.warn("Autoplay dicegah oleh browser:", error);
-        });
-    }
-}
-
-      function weddingApp() {
-       return {
-       mode: (() => {
-            const path = window.location.pathname.toLowerCase();
-
-            if (path.includes('/resepsi')) {
-                return 'resepsi';
-            }
-
-            if (path.includes('/full')) {
-                return 'full';
-            }
-
-            return 'akad';
-        })(),
-        scriptUrl: "https://script.google.com/macros/s/AKfycbw79k158qMN7B33Uw3dJuic654ArSVsG___TJt2004PRX-jLA7HvALkpp4NTm4svCs/exec",
-
-        loading: false,
-        submitted: false,
-        copiedAccount: '',
-        modalOpen: false,
-        activeImg: "",
-        isPlaying: false,
-
-        form: { nama: "", status: "", jumlah: 1, ucapan: "" },
-        guestMessages: [], // Array penampung data
-
-        // SATU FUNGSI INIT GABUNGAN YANG BENAR
-        init() {
-            this.startCountdown();
-            this.fetchGuestMessages();
-        },
-
-        async fetchGuestMessages() {
-            try {
-                const response = await fetch(this.scriptUrl);
-                const data = await response.json();
-                
-                
-                // Masukkan ke array dan balik urutannya
-                this.guestMessages = data.reverse();
-                
-            } catch (e) {
-                console.error("Gagal memuat data tamu di init:", e);
-            }
-        },
-
-        gallery: [
-            "gambar/new/DED6162.JPEG",
-            "gambar/new/DED6223.jpg",
-            "gambar/new/DED6266.JPEG",
-            "gambar/new/DED6242.jpg",
-            "gambar/new/DED6771.jpg",
-            "gambar/new/DED6304.JPEG",
-            "gambar/new/DED6851.JPEG",
-            "gambar/new/DED6372.jpg",
-            "gambar/new/DED6855.jpg",
-            "gambar/new/DED6920.jpg",
-        ],
-
-        countdown: { days: "00", hours: "00", minutes: "00", seconds: "00" },
-
-        startCountdown() {
-    const targets = {
-        akad: new Date("2026-09-05T09:00:00+08:00").getTime(),
-        resepsi: new Date("2026-09-13T09:00:00+08:00").getTime(),
-        full: new Date("2026-09-13T09:00:00+08:00").getTime()
-    };
-
-    const target = targets[this.mode] || targets.akad;
-
-    setInterval(() => {
-        const now = new Date().getTime();
-        const diff = target - now;
-
-        if (diff > 0) {
-            this.countdown.days = String(
-                Math.floor(diff / (1000 * 60 * 60 * 24))
-            ).padStart(2, "0");
-
-            this.countdown.hours = String(
-                Math.floor(
-                    (diff % (1000 * 60 * 60 * 24)) /
-                    (1000 * 60 * 60)
-                )
-            ).padStart(2, "0");
-
-            this.countdown.minutes = String(
-                Math.floor(
-                    (diff % (1000 * 60 * 60)) /
-                    (1000 * 60)
-                )
-            ).padStart(2, "0");
-
-            this.countdown.seconds = String(
-                Math.floor((diff % (1000 * 60)) / 1000)
-            ).padStart(2, "0");
-        }
-    }, 1000);
-},
-
-        openModal(img) {
-            this.activeImg = img;
-            this.modalOpen = true;
-        },
-
-        toggleAudio() {
-            const audio = this.$refs.bgAudio;
-            if (!audio) return;
-
-            if (this.isPlaying) {
-                audio.pause();
-                this.isPlaying = false;
-            } else {
-                audio.play().then(() => {
-                    this.isPlaying = true;
-                }).catch(error => {
-                    console.warn("Playback dicegah:", error);
-                    this.isPlaying = false;
-                });
-            }
-        },
-
-         copyRekening(no) {
-    navigator.clipboard.writeText(no);
-    this.copiedAccount = no; // Simpan nomor rekening yang diklik
-    setTimeout(() => {
-        this.copiedAccount = ''; // Reset kembali setelah 2 detik
-    }, 2000);
-},
-
-         async submitForm() {
-    if (!this.form.nama || !this.form.status) {
-        // Menggunakan SweetAlert untuk peringatan form kosong
-        Swal.fire({
-            icon: 'warning',
-            title: 'Oops...',
-            text: 'Mohon isi nama dan status kehadiran terlebih dahulu ya!',
-            confirmButtonColor: '#8C6D53', // Menyesuaikan warna brown-warm tema Anda
-        });
-        return;
-    }
-
-    this.loading = true;
-    try {
-        const formData = new URLSearchParams();
-        formData.append('nama', this.form.nama);
-        formData.append('status', this.form.status);
-        formData.append('jumlah', this.form.jumlah);
-        formData.append('ucapan', this.form.ucapan);
-
-        // Kirim data ke Google Spreadsheet
-        await fetch(this.scriptUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: formData
-        });
-
-        // Format waktu saat ini
-        const waktuSekarang = new Date().toLocaleDateString('id-ID', { 
-            day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' 
-        });
-
-        // Masukkan data ke urutan paling atas array guestMessages
-        this.guestMessages.unshift({
-            nama: this.form.nama,
-            status: this.form.status,
-            jumlah: this.form.jumlah,
-            ucapan: this.form.ucapan,
-            waktu: waktuSekarang
-        });
-
-        // Reset form
-        this.form = { nama: '', status: '', jumlah: 1, ucapan: '' };
-
-        // Tampilkan SweetAlert Sukses yang Elegan
-        Swal.fire({
-            icon: 'success',
-            title: 'Terima Kasih!',
-            text: 'Konfirmasi kehadiran dan ucapan Anda berhasil terkirim.',
-            timer: 3000,
-            showConfirmButton: false,
-            background: '#FAF6F0', // Warna background nuansa cream
-            color: '#4A3B32'      // Warna teks nuansa brown-deep
-        });
-
-    } catch (e) {
-        console.error("Error:", e);
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal Mengirim',
-            text: 'Terjadi kesalahan, silahkan coba beberapa saat lagi.',
-            confirmButtonColor: '#8C6D53',
-        });
-    } finally {
-        this.loading = false;
-    }
-}
-    
-        };
-      }
-    
-    document.querySelectorAll('[data-scroll]').forEach(link => {
-    link.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        const id = this.dataset.scroll;
-        const target = document.getElementById(id);
-
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-
-            history.replaceState(
-                null,
-                '',
-                window.location.pathname +
-                window.location.search +
-                '#' + id
-            );
-        }
-    });
-});
-
-    </script>
   </body>
 </html>

@@ -1,0 +1,83 @@
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  background-color: #faf8f5;
+  color: #4a3b32;
+  overflow-x: hidden;
+  background-color: #faf8f5;
+    background-image: 
+        radial-gradient(#c4a484 0.75px, transparent 0.75px), 
+        radial-gradient(#c4a484 0.75px, #faf8f5 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    background-opacity: 0.15;
+
+}
+body.lock-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Hide Scrollbar for clean UI */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+section#beranda {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Welcome Screen */
+#welcome-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  transition: none;
+}
+
+.curtain-left,
+.curtain-right {
+  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.open-curtain .curtain-left {
+  transform: translateX(-100%);
+}
+
+.open-curtain .curtain-right {
+  transform: translateX(100%);
+}
+
+/* Welcome Content */
+.welcome-content {
+  transition: opacity 0.1s ease;
+}
+
+.open-curtain .welcome-content {
+  opacity: 0;
+  visibility: hidden;
+}
