@@ -805,26 +805,37 @@ section#beranda {
 
    <!-- 8. Floating Navigation Bar -->
 <nav class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full border border-cream-200 shadow-lg z-40 flex items-center gap-6 text-brown-deep">
-    <a href="#beranda" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
+
+    <a href="#beranda" data-scroll="beranda"
+       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-house text-base"></i>
         <span>Beranda</span>
     </a>
-    <a href="#mempelai" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
+
+    <a href="#mempelai" data-scroll="mempelai"
+       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-heart text-base"></i>
         <span>Mempelai</span>
     </a>
-    <a href="#acara" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
+
+    <a href="#acara" data-scroll="acara"
+       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-calendar-days text-base"></i>
         <span>Acara</span>
     </a>
-    <a href="#galeri" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
+
+    <a href="#galeri" data-scroll="galeri"
+       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-images text-base"></i>
         <span>Galeri</span>
     </a>
-    <a href="#rsvp" class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
+
+    <a href="#rsvp" data-scroll="rsvp"
+       class="flex flex-col items-center text-[10px] hover:text-brown-warm transition">
         <i class="fa-solid fa-envelope text-base"></i>
         <span>RSVP</span>
     </a>
+
 </nav>
 
 <!-- 9. Floating Audio Player -->
@@ -1103,6 +1114,31 @@ function openInvitation() {
     
         };
       }
+    
+    document.querySelectorAll('[data-scroll]').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const id = this.dataset.scroll;
+        const target = document.getElementById(id);
+
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            history.replaceState(
+                null,
+                '',
+                window.location.pathname +
+                window.location.search +
+                '#' + id
+            );
+        }
+    });
+});
+
     </script>
   </body>
 </html>
