@@ -230,9 +230,9 @@
         <p
   class="text-brown-deep/80 text-xs sm:text-sm tracking-widest uppercase font-medium"
   x-text="
-    mode === 'resepsi'
-      ? 'Menuju Pernikahan'
-      : 'Menuju Akad'
+    mode === 'resepsi' || mode === 'full'
+  ? 'Menuju Pernikahan'
+  : 'Menuju Akad'
   "
 >
   Menuju Akad
@@ -423,7 +423,7 @@
 
   <!-- AKAD -->
   <div
-    x-show="mode === 'akad' || mode === 'full'"
+    x-show="mode === 'akad' "
     class="bg-white p-8 rounded-2xl shadow-sm border border-cream-200 text-center transition-all duration-300 hover:shadow-md"
     data-aos="zoom-in"
   >
@@ -495,9 +495,9 @@
 <div class="text-center mt-10" data-aos="fade-up">
   <a
     :href="
-      mode === 'resepsi'
-        ? 'https://maps.app.goo.gl/iXcHHp6g1i72xzJB6'
-        : 'https://maps.app.goo.gl/bruwxZkcdTJcKraS6?g_st=aw'
+      mode === 'resepsi' || mode === 'full'
+    ? 'https://maps.app.goo.gl/iXcHHp6g1i72xzJB6'
+    : 'https://maps.app.goo.gl/bruwxZkcdTJcKraS6?g_st=aw'
     "
     target="_blank"
     rel="noopener noreferrer"
